@@ -6,12 +6,13 @@ phases:
       nodejs: 20
     commands:
       - echo "Installing dependencies..."
-      - npm ci  # Uses package-lock.json for clean install
+      - npm install  # Install all dependencies
+      - npm install react-scripts --save-dev  # Ensure react-scripts is installed
 
   pre_build:
     commands:
-      - echo "Pre-build phase - verifying installation"
-      - npm list react-scripts || echo "react-scripts not found, checking package.json"
+      - echo "Pre-build check"
+      - npm list react-scripts || echo "react-scripts not found, attempting reinstall"
 
   build:
     commands:
@@ -21,10 +22,10 @@ phases:
   post_build:
     commands:
       - echo "Build completed successfully!"
-      - ls -la
 
 artifacts:
   files:
     - '**/*'
   base-directory: '.'
   discard-paths: no
+
