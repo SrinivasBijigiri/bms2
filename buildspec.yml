@@ -1,0 +1,31 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - echo "Installing dependencies..."
+      - npm ci # Ensures dependencies are installed exactly as per package-lock.json
+
+  pre_build:
+    commands:
+      - echo "Checking directory structure..."
+      - ls -la
+      - npm list react-scripts || echo "react-scripts not found!"
+
+  build:
+    commands:
+      - echo "Starting build process..."
+      - npm run build
+
+  post_build:
+    commands:
+      - echo "Build completed!"
+      - ls -la
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: '.'
+  discard-paths: no
